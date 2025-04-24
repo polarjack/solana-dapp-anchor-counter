@@ -1,14 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import {usePathname} from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import * as React from 'react'
-import {ReactNode, Suspense, useEffect, useRef} from 'react'
-import toast, {Toaster} from 'react-hot-toast'
+import { ReactNode, Suspense, useEffect, useRef } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
-import {AccountChecker} from '../account/account-ui'
-import {ClusterChecker, ClusterUiSelect, ExplorerLink} from '../cluster/cluster-ui'
-import {WalletButton} from '../solana/solana-provider'
+import { AccountChecker } from '../account/account-ui'
+import { ClusterChecker, ClusterUiSelect, ExplorerLink } from '../cluster/cluster-ui'
+import { WalletButton } from '../solana/solana-provider'
 
 export function UiLayout({ children, links }: { children: ReactNode; links: { label: string; path: string }[] }) {
   const pathname = usePathname()
@@ -152,9 +152,28 @@ export function useTransactionToast() {
   return (signature: string) => {
     toast.success(
       <div className={'text-center'}>
-        <div className="text-lg">Transaction sent</div>
-        <ExplorerLink path={`tx/${signature}`} label={'View Transaction'} className="btn btn-xs btn-primary" />
+        <div className="text-lg">
+          Transaction sent
+          <br />
+          Signature <span className="font-bold text-blue-600">{ellipsify(signature)}</span>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(signature)
+            }}
+            className="btn btn-xs btn-secondary ml-2"
+          >
+            Copy
+          </button>
+        </div>
+        <ExplorerLink
+          path={`tx/${signature}`}
+          label={'View Transaction'}
+          className="btn btn-xs btn-primary"
+        />
       </div>,
+      {
+        duration: 2000,
+      }
     )
   }
 }
