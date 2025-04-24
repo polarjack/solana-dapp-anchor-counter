@@ -1,5 +1,5 @@
 {
-  "address": "coUnmi3oBUtwtd9fjeAvSsJssXh5A5xyPbhpewyzRVF",
+  "address": "GZsNKM3YN9Agufhz1d3fKchaPiw7M1nXGdqDKW3nKFsu",
   "metadata": {
     "name": "counter",
     "version": "0.1.0",
@@ -123,7 +123,7 @@
       "args": [
         {
           "name": "value",
-          "type": "u8"
+          "type": "u16"
         }
       ]
     }
@@ -151,7 +151,7 @@
         "fields": [
           {
             "name": "count",
-            "type": "u8"
+            "type": "u16"
           }
         ]
       }
