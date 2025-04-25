@@ -1,5 +1,5 @@
 {
-  "address": "GZsNKM3YN9Agufhz1d3fKchaPiw7M1nXGdqDKW3nKFsu",
+  "address": "4Wd2PN6cv3bg6ZTQaVveR3thSjrU3F1pYFx5BotbCsHU",
   "metadata": {
     "name": "counter",
     "version": "0.1.0",
@@ -143,12 +143,146 @@
       ]
     }
   ],
+  "events": [
+    {
+      "name": "CountTriggered",
+      "discriminator": [
+        187,
+        79,
+        72,
+        84,
+        111,
+        143,
+        63,
+        18
+      ]
+    },
+    {
+      "name": "CounterClosed",
+      "discriminator": [
+        61,
+        84,
+        59,
+        97,
+        131,
+        189,
+        51,
+        193
+      ]
+    },
+    {
+      "name": "CounterCreated",
+      "discriminator": [
+        71,
+        205,
+        148,
+        94,
+        172,
+        160,
+        252,
+        170
+      ]
+    },
+    {
+      "name": "CounterSet",
+      "discriminator": [
+        181,
+        138,
+        142,
+        124,
+        29,
+        229,
+        27,
+        239
+      ]
+    }
+  ],
   "types": [
+    {
+      "name": "CountTriggered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u16"
+          },
+          {
+            "name": "increment",
+            "type": "bool"
+          }
+        ]
+      }
+    },
     {
       "name": "Counter",
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "count",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CounterClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CounterCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CounterSet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
           {
             "name": "count",
             "type": "u16"

@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/counter.json`.
  */
 export type Counter = {
-  "address": "GZsNKM3YN9Agufhz1d3fKchaPiw7M1nXGdqDKW3nKFsu",
+  "address": "4Wd2PN6cv3bg6ZTQaVveR3thSjrU3F1pYFx5BotbCsHU",
   "metadata": {
     "name": "counter",
     "version": "0.1.0",
@@ -149,12 +149,146 @@ export type Counter = {
       ]
     }
   ],
+  "events": [
+    {
+      "name": "countTriggered",
+      "discriminator": [
+        187,
+        79,
+        72,
+        84,
+        111,
+        143,
+        63,
+        18
+      ]
+    },
+    {
+      "name": "counterClosed",
+      "discriminator": [
+        61,
+        84,
+        59,
+        97,
+        131,
+        189,
+        51,
+        193
+      ]
+    },
+    {
+      "name": "counterCreated",
+      "discriminator": [
+        71,
+        205,
+        148,
+        94,
+        172,
+        160,
+        252,
+        170
+      ]
+    },
+    {
+      "name": "counterSet",
+      "discriminator": [
+        181,
+        138,
+        142,
+        124,
+        29,
+        229,
+        27,
+        239
+      ]
+    }
+  ],
   "types": [
+    {
+      "name": "countTriggered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u16"
+          },
+          {
+            "name": "increment",
+            "type": "bool"
+          }
+        ]
+      }
+    },
     {
       "name": "counter",
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "count",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "counterClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "counterCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "counterSet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter",
+            "type": "pubkey"
+          },
           {
             "name": "count",
             "type": "u16"
