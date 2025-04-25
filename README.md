@@ -1,14 +1,15 @@
-# template-next-tailwind-counter
+# Solana Dapp Anchor Counter Example
+
+Original: [Solana Develpers template-next-tailwind-counter](https://github.com/solana-developers/template-next-tailwind-counter)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node v18.18.0 or higher
-
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+- Node v22.14.0 or higher
+- Rust v1.84.1 or higher
+- Anchor CLI 0.31.1 or higher
+- Solana CLI 2.1.21 or higher
 
 ### Installation
 
