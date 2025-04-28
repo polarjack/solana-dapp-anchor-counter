@@ -1,5 +1,5 @@
 'use client'
-
+import * as anchor from '@coral-xyz/anchor'
 import { getCounterProgram, getCounterProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
@@ -39,12 +39,83 @@ export function useCounterProgram() {
     onError: () => toast.error('Failed to initialize account'),
   })
 
+  const incrementAllMutation = useMutation({
+    mutationKey: ['counter', 'increment-all', { cluster }],
+    mutationFn: async () => {
+      
+      const transaction = new anchor.web3.Transaction()
+      for (const account of accounts.data?.map((account) => account.publicKey) || []) {
+        const ix = await program.methods.increment().accounts({ counter: account }).instruction();
+        transaction.add(ix)
+      }
+
+      return provider.sendAndConfirm(transaction)
+    },
+    onSuccess: (tx) => {
+      transactionToast(tx)
+    },
+  })
+
+  const decrementAllMutation = useMutation({
+    mutationKey: ['counter', 'decrement-all', { cluster }],
+    mutationFn: async () => {
+      const transaction = new anchor.web3.Transaction()
+      for (const account of accounts.data?.map((account) => account.publicKey) || []) {
+        const ix = await program.methods.decrement().accounts({ counter: account }).instruction();
+        transaction.add(ix)
+      }
+
+      return provider.sendAndConfirm(transaction)
+    },
+    onSuccess: (tx) => {
+      transactionToast(tx)
+    },
+  })
+
+  const setAllMutation = useMutation({
+    mutationKey: ['counter', 'set-all', { cluster }],
+    mutationFn: async (value: number) => {
+      const transaction = new anchor.web3.Transaction()
+      for (const account of accounts.data?.map((account) => account.publicKey) || []) {
+        const ix = await program.methods.set(value).accounts({ counter: account }).instruction();
+        transaction.add(ix)
+      }
+
+      return provider.sendAndConfirm(transaction)
+    },
+    onSuccess: (tx) => {
+      transactionToast(tx)
+    },
+  })
+
+  const closeAllMutation = useMutation({
+    mutationKey: ['counter', 'close-all', { cluster }],
+    mutationFn: async () => {
+      const transaction = new anchor.web3.Transaction()
+      for (const account of accounts.data?.map((account) => account.publicKey) || []) {
+        const ix = await program.methods.close().accounts({ counter: account }).instruction();
+        transaction.add(ix)
+      }
+
+      return provider.sendAndConfirm(transaction)
+    },
+    onSuccess: (tx) => {
+      transactionToast(tx)
+      // while closing all accounts, we need to refetch the accounts
+      return accounts.refetch()
+    },
+  })
+
   return {
     program,
     programId,
     accounts,
     getProgramAccount,
     initialize,
+    incrementAllMutation,
+    decrementAllMutation,
+    setAllMutation,
+    closeAllMutation,
   }
 }
 
