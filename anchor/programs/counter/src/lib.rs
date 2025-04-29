@@ -5,7 +5,7 @@ use crate::event::*;
 
 use anchor_lang::prelude::*;
 
-declare_id!("4Wd2PN6cv3bg6ZTQaVveR3thSjrU3F1pYFx5BotbCsHU");
+declare_id!("FkoYkKcUGvX31329BDmEULoGCHkPZrhGdvdoMofi6BQ9");
 
 #[program]
 pub mod counter {
