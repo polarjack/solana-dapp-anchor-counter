@@ -64,42 +64,46 @@ export function CounterList() {
     await setAllMutation.mutateAsync(num)
   }
 
+  const mutationGroupVisible = accounts.data && accounts.data.length > 1
+
   return (
     <div className="space-y-6">
-      <div className="flex gap-2 justify-center mb-4">
-        <button
-          className="btn btn-outline"
-          disabled={incrementAllMutation.isPending}
-          onClick={() => handleAction(incrementAllMutation.mutateAsync)}
-        >
-          Increase All
-        </button>
-        <button
-          className="btn btn-outline"
-          disabled={setAllMutation.isPending}
-          onClick={handleSetAll}
-        >
-          Set All
-        </button>
-        <button
-          className="btn btn-outline"
-          disabled={decrementAllMutation.isPending}
-          onClick={() => handleAction(decrementAllMutation.mutateAsync)}
-        >
-          Decrease All
-        </button>
-        <button
-          className="btn btn-secondary btn-outline"
-          disabled={closeAllMutation.isPending}
-          onClick={async () => {
-            if (window.confirm('Are you sure you want to close all accounts?')) {
-              await handleAction(closeAllMutation.mutateAsync)
-            }
-          }}
-        >
-          Close All
-        </button>
-      </div>
+      {mutationGroupVisible && (
+        <div className="flex gap-2 justify-center mb-4">
+          <button
+            className="btn btn-outline"
+            disabled={incrementAllMutation.isPending}
+            onClick={() => handleAction(incrementAllMutation.mutateAsync)}
+          >
+            Increase All
+          </button>
+          <button
+            className="btn btn-outline"
+            disabled={setAllMutation.isPending}
+            onClick={handleSetAll}
+          >
+            Set All
+          </button>
+          <button
+            className="btn btn-outline"
+            disabled={decrementAllMutation.isPending}
+            onClick={() => handleAction(decrementAllMutation.mutateAsync)}
+          >
+            Decrease All
+          </button>
+          <button
+            className="btn btn-secondary btn-outline"
+            disabled={closeAllMutation.isPending}
+            onClick={async () => {
+              if (window.confirm('Are you sure you want to close all accounts?')) {
+                await handleAction(closeAllMutation.mutateAsync)
+              }
+            }}
+          >
+            Close All
+          </button>
+        </div>
+      )}
       {accounts.isLoading ? (
         <LoadingSpinner />
       ) : accounts.data?.length ? (
