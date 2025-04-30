@@ -11,14 +11,14 @@ pub struct CounterCreated {
 pub struct CounterClosed {
     pub signer: Pubkey,
     pub counter: Pubkey,
-    pub count: u16,
+    pub count: u8,
 }
 
 #[event]
 pub struct CountTriggered {
     pub signer: Pubkey,
     pub counter: Pubkey,
-    pub count: u16,
+    pub count: u8,
     pub increment: bool,
 }
 
@@ -26,5 +26,5 @@ pub struct CountTriggered {
 pub struct CounterSet {
     pub signer: Pubkey,
     pub counter: Pubkey,
-    pub count: u16,
+    pub count: u8,
 }
