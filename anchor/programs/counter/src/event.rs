@@ -28,3 +28,14 @@ pub struct CounterSet {
     pub counter: Pubkey,
     pub count: u8,
 }
+
+#[event]
+pub struct UserPositionUpdated {
+    pub signer: Pubkey,
+    pub market: Pubkey,
+    pub owner: Pubkey,
+    pub strategy_group: Pubkey,
+    pub user_position: Pubkey,
+    pub synthetic_amount: u64,
+    pub is_increase: bool,
+}

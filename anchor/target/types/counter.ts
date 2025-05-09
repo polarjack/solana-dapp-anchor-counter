@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/counter.json`.
  */
 export type Counter = {
-  "address": "FkoYkKcUGvX31329BDmEULoGCHkPZrhGdvdoMofi6BQ9",
+  "address": "8QGkPECmVESqtwtGu8bYQUEgZPfNBGdy3GmEn76FF7yG",
   "metadata": {
     "name": "counter",
     "version": "0.1.0",
@@ -13,6 +13,36 @@ export type Counter = {
     "description": "Created with Anchor"
   },
   "instructions": [
+    {
+      "name": "cancelRedeemRequest",
+      "discriminator": [
+        71,
+        179,
+        227,
+        47,
+        165,
+        227,
+        81,
+        85
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
     {
       "name": "close",
       "discriminator": [
@@ -52,6 +82,11 @@ export type Counter = {
       ],
       "accounts": [
         {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "counter",
           "writable": true
         }
@@ -71,6 +106,11 @@ export type Counter = {
         33
       ],
       "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
         {
           "name": "counter",
           "writable": true
@@ -109,6 +149,66 @@ export type Counter = {
       "args": []
     },
     {
+      "name": "mint",
+      "discriminator": [
+        51,
+        57,
+        225,
+        47,
+        182,
+        146,
+        137,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "requestRedeem",
+      "discriminator": [
+        105,
+        49,
+        44,
+        38,
+        207,
+        241,
+        33,
+        173
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "set",
       "discriminator": [
         198,
@@ -122,6 +222,11 @@ export type Counter = {
       ],
       "accounts": [
         {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "counter",
           "writable": true
         }
@@ -129,7 +234,7 @@ export type Counter = {
       "args": [
         {
           "name": "value",
-          "type": "u16"
+          "type": "u8"
         }
       ]
     }
@@ -201,6 +306,19 @@ export type Counter = {
         27,
         239
       ]
+    },
+    {
+      "name": "userPositionUpdated",
+      "discriminator": [
+        103,
+        32,
+        177,
+        181,
+        186,
+        180,
+        198,
+        99
+      ]
     }
   ],
   "types": [
@@ -219,7 +337,7 @@ export type Counter = {
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           },
           {
             "name": "increment",
@@ -235,7 +353,7 @@ export type Counter = {
         "fields": [
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           }
         ]
       }
@@ -255,7 +373,7 @@ export type Counter = {
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           }
         ]
       }
@@ -291,7 +409,43 @@ export type Counter = {
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "userPositionUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategyGroup",
+            "type": "pubkey"
+          },
+          {
+            "name": "userPosition",
+            "type": "pubkey"
+          },
+          {
+            "name": "syntheticAmount",
+            "type": "u64"
+          },
+          {
+            "name": "isIncrease",
+            "type": "bool"
           }
         ]
       }

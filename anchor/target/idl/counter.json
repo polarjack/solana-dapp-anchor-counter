@@ -1,5 +1,5 @@
 {
-  "address": "FkoYkKcUGvX31329BDmEULoGCHkPZrhGdvdoMofi6BQ9",
+  "address": "8QGkPECmVESqtwtGu8bYQUEgZPfNBGdy3GmEn76FF7yG",
   "metadata": {
     "name": "counter",
     "version": "0.1.0",
@@ -7,6 +7,36 @@
     "description": "Created with Anchor"
   },
   "instructions": [
+    {
+      "name": "cancel_redeem_request",
+      "discriminator": [
+        71,
+        179,
+        227,
+        47,
+        165,
+        227,
+        81,
+        85
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
     {
       "name": "close",
       "discriminator": [
@@ -46,6 +76,11 @@
       ],
       "accounts": [
         {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "counter",
           "writable": true
         }
@@ -65,6 +100,11 @@
         33
       ],
       "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
         {
           "name": "counter",
           "writable": true
@@ -103,6 +143,66 @@
       "args": []
     },
     {
+      "name": "mint",
+      "discriminator": [
+        51,
+        57,
+        225,
+        47,
+        182,
+        146,
+        137,
+        166
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "request_redeem",
+      "discriminator": [
+        105,
+        49,
+        44,
+        38,
+        207,
+        241,
+        33,
+        173
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "counter",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "set",
       "discriminator": [
         198,
@@ -116,6 +216,11 @@
       ],
       "accounts": [
         {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
           "name": "counter",
           "writable": true
         }
@@ -123,7 +228,7 @@
       "args": [
         {
           "name": "value",
-          "type": "u16"
+          "type": "u8"
         }
       ]
     }
@@ -195,6 +300,19 @@
         27,
         239
       ]
+    },
+    {
+      "name": "UserPositionUpdated",
+      "discriminator": [
+        103,
+        32,
+        177,
+        181,
+        186,
+        180,
+        198,
+        99
+      ]
     }
   ],
   "types": [
@@ -213,7 +331,7 @@
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           },
           {
             "name": "increment",
@@ -229,7 +347,7 @@
         "fields": [
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           }
         ]
       }
@@ -249,7 +367,7 @@
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
           }
         ]
       }
@@ -285,7 +403,43 @@
           },
           {
             "name": "count",
-            "type": "u16"
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserPositionUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategy_group",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_position",
+            "type": "pubkey"
+          },
+          {
+            "name": "synthetic_amount",
+            "type": "u64"
+          },
+          {
+            "name": "is_increase",
+            "type": "bool"
           }
         ]
       }
