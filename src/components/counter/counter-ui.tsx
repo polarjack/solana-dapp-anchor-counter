@@ -1,7 +1,7 @@
 'use client'
 
 import { Keypair, PublicKey } from '@solana/web3.js'
-import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ellipsify } from '../ui/ui-layout'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { useCounterProgram, useCounterProgramAccount } from './counter-data-access'
@@ -37,7 +37,7 @@ export function CounterList() {
     setAllMutation,
     closeAllMutation,
   } = useCounterProgram()
-  const [refresh, setRefresh] = useState(1)
+  const [refresh, setRefresh] = useState<number>(1)
 
   if (getProgramAccount.isLoading) {
     return <LoadingSpinner />
@@ -107,7 +107,7 @@ export function CounterList() {
       {accounts.isLoading ? (
         <LoadingSpinner />
       ) : accounts.data?.length ? (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {accounts.data.map((account) => (
             <CounterCard key={account.publicKey.toString()} account={account.publicKey} refresh={refresh} />
           ))}
@@ -123,7 +123,16 @@ export function CounterList() {
 }
 
 function CounterCard({ account, refresh }: { account: PublicKey; refresh: number }) {
-  const { accountQuery, incrementMutation, setMutation, decrementMutation, closeMutation } = useCounterProgramAccount({ account })
+  const {
+    accountQuery,
+    incrementMutation,
+    setMutation,
+    decrementMutation,
+    closeMutation,
+    mintMutation,
+    requestRedeemMutation,
+    cancelRedeemRequestMutation,
+  } = useCounterProgramAccount({ account })
 
   const count = useMemo(() => accountQuery.data?.count ?? 0, [accountQuery.data?.count])
 
@@ -135,6 +144,27 @@ function CounterCard({ account, refresh }: { account: PublicKey; refresh: number
 
   const handleIncrement = async () => await incrementMutation.mutateAsync()
   const handleDecrement = async () => await decrementMutation.mutateAsync()
+  const handleMint = async () => {
+    const value = window.prompt('Mint value:', '0')
+    const num = parseInt(value || '')
+    if (!value || isNaN(num)) return
+    await mintMutation.mutateAsync(num)
+  }
+
+  const handleRequestRedeem = async () => {
+    const value = window.prompt('Redeem value:', '0')
+    const num = parseInt(value || '')
+    if (!value || isNaN(num)) return
+    await requestRedeemMutation.mutateAsync(num)
+  }
+
+  const handleCancelRedeemRequest = async () => {
+    const value = window.prompt('Cancel redeem request value:', '0')
+    const num = parseInt(value || '')
+    if (!value || isNaN(num)) return
+    await cancelRedeemRequestMutation.mutateAsync(num)
+  }
+
   const handleSet = async () => {
     const value = window.prompt('Set value to:', count.toString())
     const num = parseInt(value || '')
@@ -152,23 +182,63 @@ function CounterCard({ account, refresh }: { account: PublicKey; refresh: number
   ) : (
     <div className="card card-bordered border-base-300 border-4 text-neutral-content">
       <div className="card-body items-center text-center">
-        <div className="space-y-6">
+        <div className="space-y-3">
           <h2
             className="card-title justify-center text-3xl cursor-pointer"
             onClick={() => accountQuery.refetch()}
           >
             {count}
           </h2>
-          <div className="card-actions justify-around">
-            <button className="btn btn-xs lg:btn-md btn-outline" onClick={handleIncrement} disabled={incrementMutation.isPending}>
-              Increment
-            </button>
-            <button className="btn btn-xs lg:btn-md btn-outline" onClick={handleSet} disabled={setMutation.isPending}>
-              Set
-            </button>
-            <button className="btn btn-xs lg:btn-md btn-outline" onClick={handleDecrement} disabled={decrementMutation.isPending}>
-              Decrement
-            </button>
+          <div className="card-actions justify-center flex-wrap gap-2">
+            {[
+              { label: 'Increment',   onClick: handleIncrement,             pending: incrementMutation.isPending },
+              { label: 'Set',         onClick: handleSet,                   pending: setMutation.isPending },
+              { label: 'Decrement',   onClick: handleDecrement,             pending: decrementMutation.isPending },
+            ].map(({ label, onClick, pending }) => (
+              <button
+                key={label}
+                className="btn btn-xs lg:btn-md btn-outline"
+                onClick={onClick}
+                disabled={pending}
+              >
+                {label}
+              </button>
+            ))}
+
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-xs lg:btn-md btn-outline">
+                Fake Actions
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <button
+                    onClick={handleMint}
+                    disabled={mintMutation.isPending}
+                  >
+                    Mint
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={handleRequestRedeem}
+                    disabled={requestRedeemMutation.isPending}
+                  >
+                    Request Redeem
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={handleCancelRedeemRequest}
+                    disabled={cancelRedeemRequestMutation.isPending}
+                  >
+                    Cancel Redeem
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="text-center space-y-4">
             <p>

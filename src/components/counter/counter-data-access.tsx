@@ -42,7 +42,7 @@ export function useCounterProgram() {
   const incrementAllMutation = useMutation({
     mutationKey: ['counter', 'increment-all', { cluster }],
     mutationFn: async () => {
-      
+
       const transaction = new anchor.web3.Transaction()
       for (const account of accounts.data?.map((account) => account.publicKey) || []) {
         const ix = await program.methods.increment().accounts({ counter: account }).instruction();
@@ -165,11 +165,44 @@ export function useCounterProgramAccount({ account }: { account: PublicKey }) {
     },
   })
 
+  // Fake mint functions
+  const mintMutation = useMutation({
+    mutationKey: ['counter', 'mint', { cluster, account }],
+    mutationFn: (value: number) => program.methods.mint(new anchor.BN(value)).accounts({ counter: account }).rpc(),
+    onSuccess: (tx) => {
+      transactionToast(tx)
+      return accountQuery.refetch()
+    },
+  })
+
+  const requestRedeemMutation = useMutation({
+    mutationKey: ['counter', 'request-redeem', { cluster, account }],
+    mutationFn: (value: number) => program.methods.requestRedeem(new anchor.BN(value)).accounts({ counter: account }).rpc(),
+    onSuccess: (tx) => {
+      transactionToast(tx)
+      return accountQuery.refetch()
+    },
+  })
+
+  const cancelRedeemRequestMutation = useMutation({
+    mutationKey: ['counter', 'cancel-redeem-request', { cluster, account }],
+    mutationFn: (value: number) => program.methods.cancelRedeemRequest(
+      new anchor.BN(value)
+    ).accounts({ counter: account }).rpc(),
+    onSuccess: (tx) => {
+      transactionToast(tx)
+      return accountQuery.refetch()
+    },
+  })
+
   return {
     accountQuery,
     closeMutation,
     decrementMutation,
     incrementMutation,
     setMutation,
+    mintMutation,
+    requestRedeemMutation,
+    cancelRedeemRequestMutation,
   }
 }
