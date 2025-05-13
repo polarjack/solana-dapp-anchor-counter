@@ -93,6 +93,17 @@ pub mod counter {
       is_increase: false,
     });
 
+    emit!(RedeemRequested {
+      signer: ctx.accounts.payer.key(),
+      market: ctx.accounts.payer.key(),
+      strategy_group: ctx.accounts.payer.key(),
+      redeem_request: ctx.accounts.payer.key(),
+      user_position: ctx.accounts.payer.key(),
+      underlying_token_mint: ctx.accounts.payer.key(),
+      synthetic_mint: ctx.accounts.payer.key(),
+      synthetic_amount_burned: amount,
+    });
+  
     Ok(())
   }
 

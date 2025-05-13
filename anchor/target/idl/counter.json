@@ -302,6 +302,19 @@
       ]
     },
     {
+      "name": "RedeemRequested",
+      "discriminator": [
+        5,
+        130,
+        67,
+        249,
+        243,
+        168,
+        11,
+        88
+      ]
+    },
+    {
       "name": "UserPositionUpdated",
       "discriminator": [
         103,
@@ -404,6 +417,46 @@
           {
             "name": "count",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RedeemRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategy_group",
+            "type": "pubkey"
+          },
+          {
+            "name": "redeem_request",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_position",
+            "type": "pubkey"
+          },
+          {
+            "name": "underlying_token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "synthetic_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "synthetic_amount_burned",
+            "type": "u64"
           }
         ]
       }

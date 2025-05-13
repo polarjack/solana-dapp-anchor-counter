@@ -39,3 +39,15 @@ pub struct UserPositionUpdated {
     pub synthetic_amount: u64,
     pub is_increase: bool,
 }
+
+#[event]
+pub struct RedeemRequested {
+    pub signer: Pubkey,
+    pub market: Pubkey,
+    pub strategy_group: Pubkey,
+    pub redeem_request: Pubkey,
+    pub user_position: Pubkey,
+    pub underlying_token_mint: Pubkey,
+    pub synthetic_mint: Pubkey,
+    pub synthetic_amount_burned: u64,
+}

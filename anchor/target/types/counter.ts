@@ -308,6 +308,19 @@ export type Counter = {
       ]
     },
     {
+      "name": "redeemRequested",
+      "discriminator": [
+        5,
+        130,
+        67,
+        249,
+        243,
+        168,
+        11,
+        88
+      ]
+    },
+    {
       "name": "userPositionUpdated",
       "discriminator": [
         103,
@@ -410,6 +423,46 @@ export type Counter = {
           {
             "name": "count",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "redeemRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategyGroup",
+            "type": "pubkey"
+          },
+          {
+            "name": "redeemRequest",
+            "type": "pubkey"
+          },
+          {
+            "name": "userPosition",
+            "type": "pubkey"
+          },
+          {
+            "name": "underlyingTokenMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "syntheticMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "syntheticAmountBurned",
+            "type": "u64"
           }
         ]
       }
